@@ -108,6 +108,10 @@ export default function ShipmentHistory() {
     return data?.filter(item => item.status.toLowerCase() === 'shipped').length || 0;
   };
 
+  const getProcessingCount = () => {
+    return data?.filter(item => item.status.toLowerCase() === 'processing').length || 0;
+  };
+
   if (isLoading) {
     return (
       <SafeAreaView className="flex-1 bg-gray-50 dark:bg-gray-900">
@@ -334,17 +338,47 @@ export default function ShipmentHistory() {
             </View>
           </View>
           
-          {/* Additional Stats */}
-          <View className="flex-row space-x-3 mt-3 gap-3">
-            <View className="flex-1 bg-white/10 rounded-2xl p-3">
-              <Text className="text-white text-2xl font-bold">{getDeliveredCount()}</Text>
-              <Text className="text-blue-100 text-sm">Delivered</Text>
+          {/* Enhanced Stats with Icons and Processing Count */}
+        <View className="flex-row space-x-2 mt-3 gap-2">
+          {/* Delivered Count - Green */}
+          <View className="flex-1 bg-white/10 rounded-2xl p-3 border border-green-400/20">
+            <View className="flex-row items-center justify-between mb-1">
+              <View className="flex-row items-center">
+                <View className="w-6 h-6 bg-green-400/20 rounded-full items-center justify-center mr-2">
+                  <Ionicons name="checkmark-circle" size={12} color="#4ADE80" />
+                </View>
+                <Text className="text-green-200 text-xs font-medium">DELIVERED</Text>
+              </View>
             </View>
-            <View className="flex-1 bg-white/10 rounded-2xl p-3">
-              <Text className="text-white text-2xl font-bold">{getInTransitCount()}</Text>
-              <Text className="text-blue-100 text-sm">In Transit</Text>
-            </View>
+            <Text className="text-white text-2xl font-bold">{getDeliveredCount()}</Text>
           </View>
+          
+          {/* In Transit Count - Blue */}
+          <View className="flex-1 bg-white/10 rounded-2xl p-3 border border-blue-400/20">
+            <View className="flex-row items-center justify-between mb-1">
+              <View className="flex-row items-center">
+                <View className="w-6 h-6 bg-blue-400/20 rounded-full items-center justify-center mr-2">
+                  <Ionicons name="car" size={12} color="#60A5FA" />
+                </View>
+                <Text className="text-blue-200 text-xs font-medium">IN TRANSIT</Text>
+              </View>
+            </View>
+            <Text className="text-white text-2xl font-bold">{getInTransitCount()}</Text>
+          </View>
+          
+          {/* Processing Count - Orange */}
+          <View className="flex-1 bg-white/10 rounded-2xl p-3 border border-orange-400/20">
+            <View className="flex-row items-center justify-between mb-1">
+              <View className="flex-row items-center">
+                <View className="w-6 h-6 bg-orange-400/20 rounded-full items-center justify-center mr-2">
+                  <Ionicons name="time" size={12} color="#FB923C" />
+                </View>
+                <Text className="text-orange-200 text-xs font-medium">PROCESSING</Text>
+              </View>
+            </View>
+            <Text className="text-white text-2xl font-bold">{getProcessingCount()}</Text>
+          </View>
+        </View>
         </View>
       </LinearGradient>
     </MotiView>
