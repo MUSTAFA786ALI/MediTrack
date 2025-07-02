@@ -125,8 +125,7 @@ npx expo start
 
 ## 🎥 **Demo Video**
 
-* [🔗 Click here to watch the demo](https://drive.google.com/)
-  *(Attach your final demo video link here)*
+* [🔗 Click here to watch the demo](https://drive.google.com/file/d/1RPI31R1XZbZa959REZ_YErTnF_bkgWPh/view?usp=sharing)
 
 ---
 
