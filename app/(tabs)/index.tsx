@@ -1,9 +1,10 @@
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { Ionicons } from "@expo/vector-icons";
+import * as Sentry from '@sentry/react-native';
 import { useQuery } from "@tanstack/react-query";
 import { LinearGradient } from 'expo-linear-gradient';
 import { MotiView } from "moti";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   Alert,
@@ -27,6 +28,19 @@ export default function Dashboard() {
     queryKey: ["dashboard"],
     queryFn: fetchPatientDashboard,
   });
+
+  useEffect(() => {
+    const span = Sentry.startSpan({
+      name: 'Dashboard Screen Load',
+      op: 'navigation',
+    }, () => {
+      // The span will automatically finish when the callback completes
+    });
+
+    return () => {
+      // Cleanup is handled automatically by startSpan
+    };
+  }, []);
 
   const handleRefresh = async () => {
     setRefreshing(true);

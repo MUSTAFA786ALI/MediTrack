@@ -1,5 +1,7 @@
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Sentry from '@sentry/react-native';
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import { MotiView } from "moti";
@@ -11,7 +13,7 @@ import {
   Switch,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuthStore } from "../../src/store/authStore";
@@ -42,6 +44,7 @@ export default function Settings() {
   const [darkMode, setDarkMode] = useState(colorScheme === "dark");
   const [autoRefresh, setAutoRefresh] = useState(true);
 
+  // Enhanced logout with Sentry error tracking
   const handleLogout = () => {
     Alert.alert(
       "Confirm Logout",
@@ -53,14 +56,78 @@ export default function Settings() {
           style: "destructive",
           onPress: async () => {
             try {
-              await logout();
+              console.log('🚪 Starting logout process...');
+              await logout(); // Now properly awaited
               console.log('🚪 Logout complete, routing will handle redirect');
-              // No manual navigation needed - _layout.tsx will handle it
             } catch (error) {
+              console.error('Logout error:', error);
               Alert.alert("Error", "Failed to logout. Please try again.");
             }
           },
         },
+      ]
+    );
+  };
+
+  // Add debug function to check AsyncStorage with Sentry tracking
+  const handleDebugStorage = async () => {
+    try {
+      Sentry.addBreadcrumb({
+        message: 'Debug storage accessed',
+        category: 'debug',
+        level: 'info'
+      });
+
+      // Get all keys
+      const keys = await AsyncStorage.getAllKeys();
+      console.log('AsyncStorage Keys:', keys);
+
+      // Get specific data
+      const userData = await AsyncStorage.getItem('user');
+      const loginFormData = await AsyncStorage.getItem('loginForm');
+      
+      Alert.alert(
+        "AsyncStorage Debug",
+        `🔑 Keys: ${keys.join(', ')}\n\n👤 User Data: ${userData}\n\n📝 Login Form: ${loginFormData}`,
+        [{ text: "OK" }]
+      );
+    } catch (error) {
+      console.error('Error reading AsyncStorage:', error);
+      
+      // Log storage debug error to Sentry
+      Sentry.captureException(error, {
+        tags: { feature: 'debug_storage' }
+      });
+      
+      Alert.alert("Error", "Failed to read storage data");
+    }
+  };
+
+  // Test Sentry error tracking
+  const handleTestSentry = () => {
+    Alert.alert(
+      "Test Sentry",
+      "Choose a test type:",
+      [
+        { text: "Cancel", style: "cancel" },
+        { 
+          text: "Test Error", 
+          onPress: () => {
+            Sentry.captureException(new Error('Settings test error from Patient Dashboard'));
+          }
+        },
+        { 
+          text: "Test Message", 
+          onPress: () => {
+            Sentry.captureMessage('Settings test message from Patient Dashboard', 'info');
+          }
+        },
+        { 
+          text: "Test Crash", 
+          onPress: () => {
+            throw new Error('Intentional crash for testing');
+          }
+        }
       ]
     );
   };
@@ -151,6 +218,54 @@ export default function Settings() {
       color: "#06B6D4",
       bgColor: "bg-cyan-100 dark:bg-cyan-900/30",
     },
+
+    // Debug Section (only in development)
+    ...(__DEV__ ? [
+      {
+        id: "debug-storage",
+        title: "Debug Storage",
+        subtitle: "View AsyncStorage data (Dev only)",
+        icon: "bug-outline" as keyof typeof Ionicons.glyphMap,
+        type: "navigation" as const,
+        onPress: handleDebugStorage,
+        color: "#8B5CF6",
+        bgColor: "bg-purple-100 dark:bg-purple-900/30",
+      },
+      {
+        id: "test-sentry",
+        title: "Test Sentry",
+        subtitle: "Test error tracking (Dev only)",
+        icon: "warning-outline" as keyof typeof Ionicons.glyphMap,
+        type: "navigation" as const,
+        onPress: handleTestSentry,
+        color: "#F59E0B",
+        bgColor: "bg-yellow-100 dark:bg-yellow-900/30",
+      },
+      {
+        id: "test-sentry-error",
+        title: "Test Sentry Error",
+        subtitle: "Trigger test error for Sentry",
+        icon: "bug-outline" as keyof typeof Ionicons.glyphMap,
+        type: "navigation" as const,
+        onPress: () => {
+          Sentry.captureException(new Error('Test error from Settings'));
+        },
+        color: "#EF4444",
+        bgColor: "bg-red-100 dark:bg-red-900/30",
+      },
+      {
+        id: "test-sentry-crash",
+        title: "Test App Crash",
+        subtitle: "Trigger crash for error boundary",
+        icon: "warning-outline" as keyof typeof Ionicons.glyphMap,
+        type: "navigation" as const,
+        onPress: () => {
+          throw new Error('Intentional crash for testing');
+        },
+        color: "#F59E0B",
+        bgColor: "bg-yellow-100 dark:bg-yellow-900/30",
+      },
+    ] : []),
 
     // Support Section
     {
