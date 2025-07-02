@@ -37,9 +37,11 @@ A cross-platform mobile app built with **React Native + Expo**, featuring a secu
 
 | Login | Dashboard | Shipment History |
 |---|---|---|
-| ![Login](./assets/images/favicon.png) | ![Dashboard](./assets/dashboard.png) | ![History](./assets/history.png) |
+| ![Login](./assets/images/login.png) | ![Dashboard](./assets/images/dashboard.png) | ![History](./assets/images/history.png) |
 
-*(Replace with your exported screenshots if available)*
+| ![Login](./assets/images/loginDark.png) | ![Dashboard](./assets/images/dashboardDark.png) | ![History](./assets/images/historyDark.png) |
+
+
 
 ---
 
