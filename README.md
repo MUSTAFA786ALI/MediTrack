@@ -1,50 +1,138 @@
-# Welcome to your Expo app 👋
+# MediTrack
+A cross-platform mobile app built with **React Native + Expo**, featuring a secure login flow, patient dashboard, and shipment history.
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+---
 
-## Get started
+## 🚀 **Features**
 
-1. Install dependencies
+✅ Login screen with form validation (React Hook Form + Zod)  
+✅ Zustand state management with AsyncStorage persistence  
+✅ Dashboard displaying patient details and status summary  
+✅ Shipment history rendered using FlashList for performance  
+✅ Bottom tab navigation with Expo Router  
+✅ Clean, medical-grade UI styled with NativeWind  
+✅ Subtle branding animations with Moti  
+✅ Logout functionality in Settings screen
+✅ Integrated Sentry for error tracking and monitoring
 
-   ```bash
-   npm install
-   ```
+---
 
-2. Start the app
+## 🛠️ **Tech Stack**
 
-   ```bash
-   npx expo start
-   ```
+- **React Native + Expo**
+- **Expo Router** for navigation
+- **Zustand** for state management
+- **TanStack Query** for data fetching
+- **NativeWind** for utility-first styling
+- **FlashList** for performant lists
+- **React Hook Form + Zod** for validation
+- **AsyncStorage** for persistent auth state
+- **Moti** for animations
+- **Sentry:** For error tracking and monitoring
 
-In the output, you'll find options to open the app in a
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+---
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## 📸 **Screenshots**
 
-## Get a fresh project
+| Login | Dashboard | Shipment History |
+|---|---|---|
+| ![Login](./assets/login.png) | ![Dashboard](./assets/dashboard.png) | ![History](./assets/history.png) |
 
-When you're ready, run:
+*(Replace with your exported screenshots if available)*
+
+---
+
+## 🎨 **Figma Designs**
+
+- [🔗 Figma Design Link](https://www.figma.com/)  
+*(Include public Figma link for Login, Dashboard, and Shipment History screens)*
+
+---
+
+## 📝 **Setup Instructions**
+
+1. Clone the repository:
 
 ```bash
-npm run reset-project
+git clone https://github.com/MUSTAFA786ALI/MediTrack.git
+cd patient-dashboard
+````
+
+2. Install dependencies:
+
+```bash
+npm install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+3. Start the Expo project:
 
-## Learn more
+```bash
+npx expo start
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+4. Scan the QR code with Expo Go to preview.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+---
 
-## Join the community
+## ⚙️ **Production Deployment Plan via Expo EAS**
 
-Join our community of developers creating universal apps.
+1. **EAS Build Profiles (`eas.json`):**
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```json
+{
+  "build": {
+    "development": { "developmentClient": true, "distribution": "internal" },
+    "preview": { "distribution": "internal" },
+    "production": { "distribution": "store" }
+  }
+}
+```
+
+2. **CI/CD Workflow:**
+
+   * On merge to `main`, trigger `eas build --profile production`.
+   * Use GitHub Actions with Expo’s EAS GitHub integration.
+
+3. **Automated Submission:**
+
+   * Use `eas submit` to deploy builds to the App Store and Google Play.
+
+4. **OTA Updates:**
+
+   * Utilize `eas update` for JavaScript-only updates directly to users.
+
+5. **Secrets Management:**
+
+   * Store `EXPO_TOKEN`, keystore files, and Apple credentials as CI environment secrets.
+
+---
+
+## 🏗️ **Architecture Decisions**
+
+* **Expo Router:** For simple stack + tab navigation
+* **Zustand:** Lightweight state management with persistence middleware
+* **TanStack Query:** For fetching and caching API data efficiently
+* **NativeWind:** Rapid UI development with Tailwind CSS syntax
+* **AsyncStorage:** Chosen over MMKV for compatibility with Expo Managed Workflow
+* **Moti:** Added for enhancing UI interactions
+* **Sentry:** Integrated for real-time error tracking and monitoring to maintain app reliability in production.
+
+
+---
+
+## 🎥 **Demo Video**
+
+* [🔗 Click here to watch the demo](https://drive.google.com/)
+  *(Attach your final demo video link here)*
+
+---
+
+## 👨‍💻 **Author**
+
+* **Name:** Syed Mustafa Ali
+* **Email:** mustafaalisyed683@gmail.com
+* **LinkedIn:** www.linkedin.com/in/syed-mustafa-ali-623a4920a
+* **GitHub:** https://github.com/MUSTAFA786ALI/
+
+---
