@@ -47,8 +47,8 @@ A cross-platform mobile app built with **React Native + Expo**, featuring a secu
 
 ## 🎨 **Figma Designs**
 
-- [🔗 Figma Design Link](https://www.figma.com/)  
-*(Include public Figma link for Login, Dashboard, and Shipment History screens)*
+- [🔗 Figma Design Link](https://www.figma.com/design/TjTFE0ek88o3bNSbaUDQhn/MediTrack?node-id=0-1&t=dAu7JlHmDXBLRbcr-1)  
+
 
 ---
 
