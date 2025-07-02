@@ -55,7 +55,7 @@ A cross-platform mobile app built with **React Native + Expo**, featuring a secu
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/patient-dashboard.git
+git clone https://github.com/MUSTAFA786ALI/MediTrack.git
 cd patient-dashboard
 ````
 
